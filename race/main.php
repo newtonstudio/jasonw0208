@@ -1,9 +1,14 @@
 <?php
-include "Animal.php";
-include "Rabbit.php";
-include "Tortoise.php";
-include "Person.php";
-include "Game.php";
+function my_autoloader($class) {
+    include $class . '.php';
+}
+spl_autoload_register("my_autoloader");
+
+// include "Animal.php";
+// include "Rabbit.php";
+// include "Tortoise.php";
+// include "Person.php";
+// include "Game.php";
 
 $game = new Game();
 
