@@ -13,6 +13,18 @@ $man = new Person("Adam");
 // $man3 = new Engineer("Tomson");
 // $man3->greet();
 
-echo $man->name;
+// echo $man->dob;
+// echo "<br/>";
+// $man->dob = "1987-06-02";
+// echo $man->dob;
+// echo "<br/>";
+
+// echo $man->getDOB();
+// echo $man->setDOB("1987-06-02");
+// echo $man->getDOB();
+
+$enginner = new Engineer("Elsen");
+
+$enginner->showName();
 
 ?>
