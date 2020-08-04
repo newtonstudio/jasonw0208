@@ -1,23 +1,28 @@
 <?php
 class Home extends CI_Controller {
+
+    private $data = [];
+
     public function homepage(){
 
         $this->load->model("Album_model");
         $albumList = $this->Album_model->get_where();
-
-        $data = [];
-        $data['albumList'] = $albumList;
-
+        $this->data['albumList'] = $albumList;
         $this->load->view("header");
-        $this->load->view("homepage", $data);
+        $this->load->view("homepage", $this->data);
         $this->load->view("footer");
 
     }
 
-    public function detailpage(){
+    public function detailpage($id=1){
 
+        $this->load->model("Album_model");
+        $detail = $this->Album_model->getOne([
+            'id' => $id,
+        ]);
+        $this->data['detail'] = $detail;
         $this->load->view("header");
-        $this->load->view("detailpage");
+        $this->load->view("detailpage", $this->data);
         $this->load->view("footer");
 
     }
@@ -55,10 +60,11 @@ class Home extends CI_Controller {
         // print_r($datalist);
 
         //test getOne
-        // $data = $this->Album_model->getOne([
-        //      'is_deleted' => 0,
-        // ]);
-        // print_r($data);
+        $data = $this->Album_model->getOne([
+             'is_deleted' => 0,
+             'id' => 2,
+        ]);
+        print_r($data);
     
 
 

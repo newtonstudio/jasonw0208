@@ -29,7 +29,7 @@ class Album_model extends CI_Model {
     }
 
     //To get multiple data (more than 1)
-    public function get_where($where){
+    public function get_where($where=[]){
 
         /*
         $sql = mysqli_query($link, "SELECT * FROM album WHERE display = 1 AND category = 'world' AND is_deleted = 0");
