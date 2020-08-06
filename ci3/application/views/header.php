@@ -4,6 +4,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="857120368705-nh0v4nhnqd631v6vi9vqso3volo557f8.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -44,6 +47,92 @@ footer p {
   margin-bottom: .25rem;
 }
     </style>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '613482479153618',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v2.10'
+        });
+          
+        FB.AppEvents.logPageView();   
+          
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+      // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+
+    	$.post("<?=base_url('api/flogin')?>",
+    		{"token":response.authResponse.accessToken}, 
+    		function(response){
+
+			response = JSON.parse(response);
+
+			if(response.status == "OK") {
+				console.log("login success");
+			} else {
+				alert(response.result);
+			}
+
+		});
+
+    } else {
+      // The person is not logged into your app or we are unable to tell.
+      console.log('Please log ' +
+        'into this app.');
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+    </script>    
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        $.post("<?=base_url('api/glogin')?>",{
+        	"token":id_token,
+				}, function(response){
+
+						response = JSON.parse(response);
+						if(response.status == "OK") {
+								console.log("login success");
+
+						} else {
+								alert(response.result);
+						}
+
+				});
+      }
+    </script>
   </head>
   <body>
   <header>
@@ -60,6 +149,11 @@ footer p {
             <li><a href="#" class="text-white">Follow on Twitter</a></li>
             <li><a href="#" class="text-white">Like on Facebook</a></li>
             <li><a href="#" class="text-white">Email me</a></li>
+            <fb:login-button 
+              scope="public_profile,email"
+              onlogin="checkLoginState();">
+            </fb:login-button>
+            
           </ul>
         </div>
       </div>
@@ -76,4 +170,6 @@ footer p {
       </button>
     </div>
   </div>
+  <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
 </header>
+
