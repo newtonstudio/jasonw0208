@@ -3,6 +3,22 @@ class Home extends CI_Controller {
 
     private $data = [];
 
+    public function uploadSubmit(){
+
+        if(isset($_FILES['myFile']) && $_FILES['myFile']['error'] == 0) {
+
+            $result = move_uploaded_file($_FILES['myFile']['tmp_name'], "./uploads/".$_FILES['myFile']['name']);
+
+            if($result) {
+                echo "Success";
+            } else {
+                echo "failure";
+            }
+
+        }
+
+    }
+
     public function homepage(){
 
         $this->load->model("Album_model");

@@ -8,6 +8,11 @@
         <a href="#" class="btn btn-primary my-2">Main call to action</a>
         <a href="#" class="btn btn-secondary my-2">Secondary action</a>
       </p>
+      <form method="POST" action="<?=base_url('home/uploadSubmit')?>" enctype="multipart/form-data">
+        <input type="file" name="myFile" />
+        <input type="submit" value="Upload" />
+      </form>
+
     </div>
   </section>
 
