@@ -3,6 +3,19 @@ class Home extends CI_Controller {
 
     private $data = [];
 
+    public function testRecursive(){
+
+        $this->load->model("Category_model");
+
+        $result = $this->Category_model->recursiveOutput(0);
+
+        //echo json_encode($result);
+
+        $html = $this->Category_model->recursiveHTML($result, 0);
+        echo $html;
+
+    }
+
     public function uploadSubmit(){
 
         if(isset($_FILES['myFile']) && $_FILES['myFile']['error'] == 0) {
