@@ -9,10 +9,10 @@ class Home extends CI_Controller {
 
         $result = $this->Category_model->recursiveOutput(0);
 
-        //echo json_encode($result);
+        echo json_encode($result);
 
-        $html = $this->Category_model->recursiveHTML($result, 0);
-        echo $html;
+        //$html = $this->Category_model->recursiveHTML($result, 0);
+        //echo $html;
 
     }
 
