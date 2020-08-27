@@ -13,14 +13,10 @@ class Api_event_manage extends CI_Controller {
 
             $eventList = $this->input->post("eventList", true);
             $profile = $this->input->post("profile", true);
+            $name = $this->input->post("name", true);
+            $password = $this->input->post("password", true);
 
-           
-            // $name = $this->input->post("name", true);
-            // $password = $this->input->post("password", true);
-
-            $name = $_POST['name'];
-            $password = $_POST['password'];
-
+            
 
             $this->load->model("Eventbackup_model");
 
@@ -45,6 +41,8 @@ class Api_event_manage extends CI_Controller {
             } else {
 
                 $event_id = $this->Eventbackup_model->insert([
+                    'name'      => $name,
+                    'password'  => $password,
                     'eventList' => $eventList,
                     'profile'   => $profile,
                     'created_date' => date("Y-m-d H:i:s"),
