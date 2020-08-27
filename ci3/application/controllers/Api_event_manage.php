@@ -14,18 +14,47 @@ class Api_event_manage extends CI_Controller {
             $eventList = $this->input->post("eventList", true);
             $profile = $this->input->post("profile", true);
 
+            $name = $this->input->post("name", true);
+            $password = $this->input->post("password", true);
+
             $this->load->model("Eventbackup_model");
 
-            $event_id = $this->Eventbackup_model->insert([
-                'eventList' => $eventList,
-                'profile'   => $profile,
-                'created_date' => date("Y-m-d H:i:s"),
+            $eventData = $this->Eventbackup_model->getOne([
+                'name' => $name,
+                'password' => $password,
+                'is_deleted' => 0,
             ]);
-            
+
+            if(!empty($eventData)) {
+
+                $this->Eventbackup_model->update([
+                    'id' => $eventData['id']
+                ], [
+                    'eventList' => $eventList,
+                    'profile'   => $profile,
+                    'modified_date' => date("Y-m-d H:i:s"),
+                ]);
+
+                $event_id = $eventData['id'];
+
+            } else {
+
+                $event_id = $this->Eventbackup_model->insert([
+                    'eventList' => $eventList,
+                    'profile'   => $profile,
+                    'created_date' => date("Y-m-d H:i:s"),
+                ]);
+
+            }
+
             echo json_encode([
                 'status' => "OK",
                 'result' => $event_id,
             ]);
+
+            
+            
+            
                 
         }
 
