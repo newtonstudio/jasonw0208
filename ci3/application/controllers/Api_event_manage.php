@@ -14,11 +14,13 @@ class Api_event_manage extends CI_Controller {
             $eventList = $this->input->post("eventList", true);
             $profile = $this->input->post("profile", true);
 
-            echo json_encode($_POST);
-            exit;
+           
+            // $name = $this->input->post("name", true);
+            // $password = $this->input->post("password", true);
 
-            $name = $this->input->post("name", true);
-            $password = $this->input->post("password", true);
+            $name = $_POST['name'];
+            $password = $_POST['password'];
+
 
             $this->load->model("Eventbackup_model");
 
